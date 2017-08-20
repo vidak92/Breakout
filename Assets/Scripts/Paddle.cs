@@ -38,14 +38,19 @@ public class Paddle : MonoBehaviour
         if (other.CompareTag("Ball"))
         {
 //            Debug.Log("collision: Paddle");
-            float difference = (other.transform.position.x - transform.position.x) / transform.localScale.x * 2f;
-            float sign = Mathf.Sign(difference);
-            difference = Mathf.Abs(difference);
+            float diffX = (other.transform.position.x - transform.position.x) / transform.localScale.x * 2f;
+            float signX = Mathf.Sign(diffX);
+            diffX = Mathf.Abs(diffX);
 //            Debug.Log("difference = " + difference);
-            float degrees = Mathf.Lerp(90f, 30f, difference);
+            float degrees = Mathf.Lerp(90f, 30f, diffX);
 //            Debug.Log("degrees = " + degrees);
-            float x = Mathf.Cos(degrees * Mathf.Deg2Rad) * sign;
-            float y = Mathf.Sin(degrees * Mathf.Deg2Rad);
+            float x = Mathf.Cos(degrees * Mathf.Deg2Rad) * signX;
+
+            float diffY = other.transform.position.y - transform.position.y;
+            float signY = Mathf.Sign(diffY);
+//            Debug.Log("diif y: " + diffY);
+            float y = Mathf.Sin(degrees * Mathf.Deg2Rad) * signY;
+
             other.GetComponent<Ball>().SetDirection(x, y);
         }
     }

@@ -9,20 +9,27 @@ public class Paddle : MonoBehaviour
 
     float MaxX { get { return  14.5f - wallGap - transform.localScale.x / 2f; } }
 
+    float direction = 0f;
+
     void Update()
     {
-        float h = 0f;
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (LeftKeyDown)
         {
-            h -= 1f;
+            direction = -1f;
         }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        else if (RightKeyDown)
         {
-            h += 1f;
+            direction = 1f;
         }
-//        Debug.Log("h: " + h);
-//        float h = Input.GetAxis("Horizontal");
-        transform.position += new Vector3(h * movementSpeed * Time.deltaTime, 0f, 0f);
+        else if (LeftKeyUp)
+        {
+            direction = RightKey ? 1f : 0f;
+        }
+        else if (RightKeyUp)
+        {
+            direction = LeftKey ? -1f : 0f;
+        }
+        transform.position += new Vector3(direction * movementSpeed * Time.deltaTime, 0f, 0f);
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, MinX, MaxX), transform.position.y, transform.position.z);
     }
 
@@ -42,4 +49,16 @@ public class Paddle : MonoBehaviour
             other.GetComponent<Ball>().SetDirection(x, y);
         }
     }
+
+    bool LeftKey { get { return Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow); } }
+
+    bool RightKey { get { return Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow); } }
+
+    bool LeftKeyDown { get { return Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow); } }
+
+    bool RightKeyDown { get { return Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow); } }
+
+    bool LeftKeyUp { get { return Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow); } }
+
+    bool RightKeyUp { get { return Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow); } }
 }

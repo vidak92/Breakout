@@ -12,17 +12,16 @@ public class Ball : MonoBehaviour
 
     void Awake()
     {
-        col = GetComponent<Collider2D>();
-        col.enabled = false;
-        transform.position = FindObjectOfType<Paddle>().transform.position + new Vector3(1f, 1f, 0f);
-        paddleTransform = FindObjectOfType<Paddle>().transform;
-        paddleOffset = transform.position - paddleTransform.position;
-        canMove = false;
-        direction = Vector2.zero;
+        Init();
     }
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Init();
+        }
+
         if (!canMove && Input.GetKeyDown(KeyCode.Space))
         {
             canMove = true;
@@ -57,6 +56,17 @@ public class Ball : MonoBehaviour
         col.enabled = false;
         yield return null;
         col.enabled = true;
+    }
+
+    void Init()
+    {
+        col = GetComponent<Collider2D>();
+        col.enabled = false;
+        transform.position = FindObjectOfType<Paddle>().transform.position + new Vector3(1f, 1f, 0f);
+        paddleTransform = FindObjectOfType<Paddle>().transform;
+        paddleOffset = transform.position - paddleTransform.position;
+        canMove = false;
+        direction = Vector2.zero;
     }
 
     public void SetDirection(float x, float y)

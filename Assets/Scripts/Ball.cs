@@ -26,7 +26,7 @@ public class Ball : MonoBehaviour
         {
             canMove = true;
             col.enabled = true;
-            direction = Vector2.one;
+            direction = new Vector2(1f, 1f);
         }
 
         if (canMove)
@@ -48,14 +48,41 @@ public class Ball : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        StartCoroutine(ColliderDisableForOneFrame());
-    }
+        if (other.CompareTag(Tags.WallTop))
+        {
+            direction.y = -Mathf.Abs(direction.y);
+        }
+        else if (other.CompareTag(Tags.WallLeft))
+        {
+            direction.x = Mathf.Abs(direction.x);
+        }
+        else if (other.CompareTag(Tags.WallBottom))
+        {
+            direction.y = Mathf.Abs(direction.y);
+        }
+        else if (other.CompareTag(Tags.WallRight))
+        {
+            direction.x = -Mathf.Abs(direction.x);
+        }
+        else if (other.CompareTag(Tags.Brick))
+        {
+            float xDiff = transform.position.x - other.transform.position.x;
+            float yDiff = transform.position.y - other.transform.position.y;
+            //Debug.Log("x diff: " + xDiff + "\ny diff: " + yDiff);
 
-    System.Collections.IEnumerator ColliderDisableForOneFrame()
-    {
-        col.enabled = false;
-        yield return null;
-        col.enabled = true;
+            float brickAspectRatio = other.transform.localScale.y / other.transform.localScale.x;
+
+            if (Mathf.Abs(xDiff * brickAspectRatio) > Mathf.Abs(yDiff))
+            {
+                direction.x = -direction.x;
+            }
+            else
+            {
+                direction.y = -direction.y;
+            }
+
+            Destroy(other.gameObject);
+        }
     }
 
     void Init()
@@ -73,26 +100,5 @@ public class Ball : MonoBehaviour
     {
         direction.x = x;
         direction.y = y;
-    }
-
-    public void Bounce(Direction bounceDirection)
-    {
-        switch (bounceDirection)
-        {
-            case Direction.Up:
-                direction.y = Mathf.Abs(direction.y);
-                break;
-            case Direction.Right:
-                direction.x = (Mathf.Abs(direction.x));
-                break;
-            case Direction.Down:
-                direction.y = -Mathf.Abs(direction.y);
-                break;
-            case Direction.Left:
-                direction.x = -Mathf.Abs(direction.x);
-                break;
-            default:
-                break;
-        }
     }
 }

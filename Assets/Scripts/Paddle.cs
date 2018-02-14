@@ -4,6 +4,8 @@ public class Paddle : MonoBehaviour
 {
     [SerializeField] float movementSpeed;
     [SerializeField] float wallGap = 1f;
+    [SerializeField] float minBounceAngle = 30f;
+    [SerializeField] float maxBounceAngle = 90f;
 
     float MinX { get { return -14.5f + wallGap + transform.localScale.x / 2f; } }
 
@@ -35,14 +37,13 @@ public class Paddle : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Ball"))
+        if (other.CompareTag(Tags.Ball))
         {
 //            Debug.Log("collision: Paddle");
             float diffX = (other.transform.position.x - transform.position.x) / transform.localScale.x * 2f;
             float signX = Mathf.Sign(diffX);
-            diffX = Mathf.Abs(diffX);
 //            Debug.Log("difference = " + difference);
-            float degrees = Mathf.Lerp(90f, 30f, diffX);
+            float degrees = Mathf.Lerp(maxBounceAngle, minBounceAngle, Mathf.Abs(diffX));
 //            Debug.Log("degrees = " + degrees);
             float x = Mathf.Cos(degrees * Mathf.Deg2Rad) * signX;
 

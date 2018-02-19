@@ -25,9 +25,9 @@ public class BrickGrid : MonoBehaviour
                     GameObject brick = Instantiate(brickPrefab) as GameObject;
                     float x = startX + j * (BrickScale.x + brickGap);
                     float y = startY - i * (BrickScale.y + brickGap);
-                    brick.transform.position = new Vector3(x, y, 0f);
+                    brick.transform.parent = transform;
+                    brick.transform.localPosition = new Vector3(x, y, 0f);
                     brick.name = "Brick" + i + j;
-                    brick.transform.parent = transform;    
                 }
             }
         }

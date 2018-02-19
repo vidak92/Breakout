@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+// TODO reimplement collisions without physics engine
 public class Ball : MonoBehaviour
 {
     [SerializeField] float movementSpeed;
@@ -9,6 +10,7 @@ public class Ball : MonoBehaviour
     Collider2D col;
     Vector3 paddleOffset;
     bool canMove;
+    bool isColliding;
 
     void Awake()
     {
@@ -19,8 +21,14 @@ public class Ball : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
             Init();
         }
+
+        isColliding = false;
 
         if (!canMove && Input.GetKeyDown(KeyCode.Space))
         {
@@ -64,24 +72,56 @@ public class Ball : MonoBehaviour
         {
             direction.x = -Mathf.Abs(direction.x);
         }
-        else if (other.CompareTag(Tags.Brick))
+        else if (other.CompareTag(Tags.Brick) && !isColliding)
         {
-            float xDiff = transform.position.x - other.transform.position.x;
-            float yDiff = transform.position.y - other.transform.position.y;
-            //Debug.Log("x diff: " + xDiff + "\ny diff: " + yDiff);
+            isColliding = true;
+            Transform brickTransform = other.transform;
+            float xDiff = (transform.position.x - brickTransform.position.x);
+            float xDiffPerc = xDiff / (transform.localScale.x / 2f + brickTransform.localScale.x / 2f);
+            float yDiff = (transform.position.y - brickTransform.position.y);
+            float yDiffPerc = yDiff / (transform.localScale.y / 2f + brickTransform.localScale.y / 2f);
+            Debug.Log("x diff: " + xDiff + "\t\tperc: " + xDiffPerc + "\ny diff: " + yDiff + "\t\tperc: " + yDiffPerc);
 
-            float brickAspectRatio = other.transform.localScale.y / other.transform.localScale.x;
+//            float brickAspectRatio = other.transform.localScale.y / other.transform.localScale.x;
 
-            if (Mathf.Abs(xDiff * brickAspectRatio) > Mathf.Abs(yDiff))
+            if (Mathf.Abs(xDiffPerc) >= 0.75f && Mathf.Abs(yDiffPerc) >= 0.75f) // corners
+            {
+                Debug.Log("bounce xy");
+                direction.x = Mathf.Sign(xDiffPerc) * Mathf.Abs(direction.x);
+                direction.y = Mathf.Sign(yDiffPerc) * Mathf.Abs(direction.y);
+            }
+            else if (Mathf.Abs(xDiffPerc) >= Mathf.Abs(yDiffPerc))
             {
                 direction.x = -direction.x;
+                Debug.Log("bounce x");
             }
             else
             {
                 direction.y = -direction.y;
+                Debug.Log("bounce y");
             }
 
             Destroy(other.gameObject);
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag(Tags.WallTop))
+        {
+            direction.y = -Mathf.Abs(direction.y);
+        }
+        else if (other.CompareTag(Tags.WallLeft))
+        {
+            direction.x = Mathf.Abs(direction.x);
+        }
+        else if (other.CompareTag(Tags.WallBottom))
+        {
+            direction.y = Mathf.Abs(direction.y);
+        }
+        else if (other.CompareTag(Tags.WallRight))
+        {
+            direction.x = -Mathf.Abs(direction.x);
         }
     }
 

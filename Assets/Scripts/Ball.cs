@@ -53,23 +53,9 @@ public class Ball : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag(Tags.WallTop))
-        {
-            direction.y = -Mathf.Abs(direction.y);
-        }
-        else if (other.CompareTag(Tags.WallLeft))
-        {
-            direction.x = Mathf.Abs(direction.x);
-        }
-        else if (other.CompareTag(Tags.WallBottom))
-        {
-            direction.y = Mathf.Abs(direction.y);
-        }
-        else if (other.CompareTag(Tags.WallRight))
-        {
-            direction.x = -Mathf.Abs(direction.x);
-        }
-        else if (other.CompareTag(Tags.Brick))
+        CheckWallCollisions(other);
+
+        if (other.CompareTag(Tags.Brick))
         {
             Transform brickTransform = other.transform;
             float xDiff = (transform.position.x - brickTransform.position.x);
@@ -103,19 +89,24 @@ public class Ball : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.CompareTag(Tags.WallTop))
+        CheckWallCollisions(other);
+    }
+
+    void CheckWallCollisions(Collider2D collider)
+    {
+        if (collider.CompareTag(Tags.WallTop))
         {
             direction.y = -Mathf.Abs(direction.y);
         }
-        else if (other.CompareTag(Tags.WallLeft))
+        else if (collider.CompareTag(Tags.WallLeft))
         {
             direction.x = Mathf.Abs(direction.x);
         }
-        else if (other.CompareTag(Tags.WallBottom))
+        else if (collider.CompareTag(Tags.WallBottom))
         {
             direction.y = Mathf.Abs(direction.y);
         }
-        else if (other.CompareTag(Tags.WallRight))
+        else if (collider.CompareTag(Tags.WallRight))
         {
             direction.x = -Mathf.Abs(direction.x);
         }

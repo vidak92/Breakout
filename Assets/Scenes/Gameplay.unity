@@ -717,7 +717,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brickPrefab: {fileID: 159728, guid: 477e7d6770bcc4cbebb1ae86d02ba036, type: 2}
   brickGap: 0.4
-  levelIndex: 0
+  levelData: {fileID: 11400000, guid: e0d6fe010f6cc4538beb0893ff7e193e, type: 2}
 --- !u!1 &1725169892
 GameObject:
   m_ObjectHideFlags: 0

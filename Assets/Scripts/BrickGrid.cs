@@ -2,25 +2,23 @@
 
 public class BrickGrid : MonoBehaviour
 {
-    public const int MaxRows = 8, MaxCols = 8;
-
     readonly float startX = -11.2f, startY = 8f;
 
     [SerializeField] GameObject brickPrefab;
     [SerializeField] float brickGap = 0.2f;
-    [SerializeField] int levelIndex = 0;
+    [SerializeField] LevelData levelData;
 
     Vector3 BrickScale { get { return brickPrefab.transform.localScale; } }
 
     void Awake()
     {
-//        float startX = (-maxCols * BrickScale.x - (maxCols - 1) * brickGap + BrickScale.x) / 2f;
-        char[,] currentLevel = LevelData.Levels[levelIndex];
-        for (int i = 0; i < MaxRows; i++)
+        float startX = (-LevelData.Cols * BrickScale.x - (LevelData.Rows - 1) * brickGap + BrickScale.x) / 2f;
+        for (int i = 0; i < LevelData.Rows; i++)
         {
-            for (int j = 0; j < MaxCols; j++)
+            for (int j = 0; j < LevelData.Cols; j++)
             {
-                if (currentLevel[i, j] == 'B')
+                BrickType? brickType = levelData.GetData(i, j);
+                if (brickType.HasValue && brickType.Value == BrickType.Regular)
                 {
                     GameObject brick = Instantiate(brickPrefab) as GameObject;
                     float x = startX + j * (BrickScale.x + brickGap);

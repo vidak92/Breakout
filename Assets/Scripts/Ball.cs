@@ -76,25 +76,25 @@ public class Ball : MonoBehaviour
             float xDiffPerc = xDiff / (transform.localScale.x / 2f + brickTransform.localScale.x / 2f);
             float yDiff = (transform.position.y - brickTransform.position.y);
             float yDiffPerc = yDiff / (transform.localScale.y / 2f + brickTransform.localScale.y / 2f);
-            Debug.Log("x diff: " + xDiff + "\t\tperc: " + xDiffPerc + "\ny diff: " + yDiff + "\t\tperc: " + yDiffPerc);
+//            Debug.Log("x diff: " + xDiff + "\t\tperc: " + xDiffPerc + "\ny diff: " + yDiff + "\t\tperc: " + yDiffPerc);
 
 //            float brickAspectRatio = other.transform.localScale.y / other.transform.localScale.x;
 
             if (Mathf.Abs(xDiffPerc) >= 0.75f && Mathf.Abs(yDiffPerc) >= 0.75f) // corners
             {
-                Debug.Log("bounce xy");
+//                Debug.Log("bounce xy");
                 direction.x = Mathf.Sign(xDiffPerc) * Mathf.Abs(direction.x);
                 direction.y = Mathf.Sign(yDiffPerc) * Mathf.Abs(direction.y);
             }
             else if (Mathf.Abs(xDiffPerc) >= Mathf.Abs(yDiffPerc))
             {
                 direction.x = -direction.x;
-                Debug.Log("bounce x");
+//                Debug.Log("bounce x");
             }
             else
             {
                 direction.y = -direction.y;
-                Debug.Log("bounce y");
+//                Debug.Log("bounce y");
             }
 
             Destroy(other.gameObject);

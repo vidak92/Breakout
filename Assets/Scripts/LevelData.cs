@@ -6,12 +6,16 @@ public static class LevelData
         // level 0
         new char[BrickGrid.MaxRows, BrickGrid.MaxCols]
         {
+            { 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E' },
             { 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B' },
             { 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B' },
             { 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B' },
             { 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B' },
-            { 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B' },
-            { 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B' },
+//            { 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B' },
+//            { 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B' },
+//            { 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B' },
+//            { 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B' },
+            { 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E' },
             { 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E' },
             { 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E' },
         },

@@ -10,7 +10,6 @@ public class Ball : MonoBehaviour
     Collider2D col;
     Vector3 paddleOffset;
     bool canMove;
-    bool isColliding;
 
     void Awake()
     {
@@ -27,8 +26,6 @@ public class Ball : MonoBehaviour
         {
             Init();
         }
-
-        isColliding = false;
 
         if (!canMove && Input.GetKeyDown(KeyCode.Space))
         {
@@ -72,9 +69,8 @@ public class Ball : MonoBehaviour
         {
             direction.x = -Mathf.Abs(direction.x);
         }
-        else if (other.CompareTag(Tags.Brick) && !isColliding)
+        else if (other.CompareTag(Tags.Brick))
         {
-            isColliding = true;
             Transform brickTransform = other.transform;
             float xDiff = (transform.position.x - brickTransform.position.x);
             float xDiffPerc = xDiff / (transform.localScale.x / 2f + brickTransform.localScale.x / 2f);

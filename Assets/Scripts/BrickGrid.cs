@@ -2,7 +2,7 @@
 
 public class BrickGrid : MonoBehaviour
 {
-    public const int MaxRows = 10, MaxCols = 8;
+    public const int MaxRows = 8, MaxCols = 8;
 
     readonly float startX = -11.2f, startY = 8f;
 

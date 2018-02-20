@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
+[System.Serializable]
 public enum BrickType
 {
     Empty,
@@ -10,26 +11,22 @@ public enum BrickType
 [CreateAssetMenu]
 public class LevelData : ScriptableObject
 {
-    public const int Rows = 8;
-    public const int Cols = 8;
+    public const int MaxRows = 8;
+    public const int MaxCols = 8;
 
-    BrickType[,] gridData;
+    [SerializeField, HideInInspector] BrickType[] gridData;
 
-    readonly BrickType[,] level1Data = new BrickType[Rows, Cols]
+
+    public bool DataInitialized { get { return gridData != null; } }
+
+    public int Rows { get { return gridData.Length / MaxCols; } }
+
+    public int Cols { get { return gridData.Length / MaxRows; } }
+
+
+    public void ResetData()
     {
-        { BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty },
-        { BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular },
-        { BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular },
-        { BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular },
-        { BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular, BrickType.Regular },
-        { BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty },
-        { BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty },
-        { BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty, BrickType.Empty }
-    };
-
-    void OnEnable()
-    {
-        gridData = level1Data;
+        gridData = new BrickType[MaxRows * MaxCols];
     }
 
     public BrickType? GetData(int r, int c)
@@ -39,11 +36,26 @@ public class LevelData : ScriptableObject
             Debug.LogError("Cannot get data, gridData is null!");
             return null;
         }
-        if (r < 0 || r >= gridData.GetLength(0) || c < 0 || c >= gridData.GetLength(1))
+        if (r < 0 || r >= Rows || c < 0 || c >= Cols)
         {
             Debug.LogError("Cannot get data, grid index is out of bounds!");
             return null;
         }
-        return gridData[r, c];
+        return gridData[r + Cols * c];
+    }
+
+    public void SetData(int r, int c, BrickType type)
+    {
+        if (gridData == null)
+        {
+            Debug.LogError("Cannot get data, gridData is null!");
+            return;
+        }
+        if (r < 0 || r >= Rows || c < 0 || c >= Cols)
+        {
+            Debug.LogError("Cannot get data, grid index is out of bounds!");
+            return;
+        }
+        gridData[r + Cols * c] = type;
     }
 }

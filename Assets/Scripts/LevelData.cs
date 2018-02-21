@@ -8,7 +8,7 @@ public enum BrickType
     Regular
 }
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "NewLevelData", menuName = "Data/LevelData")]
 public class LevelData : ScriptableObject
 {
     public const int MaxRows = 8;

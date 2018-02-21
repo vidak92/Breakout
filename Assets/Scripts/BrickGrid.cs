@@ -2,17 +2,18 @@
 
 public class BrickGrid : MonoBehaviour
 {
-    readonly float startX = -11.2f, startY = 8f;
+    float startX = -11.2f, startY = 8f;
 
     [SerializeField] GameObject brickPrefab;
     [SerializeField] float brickGap = 0.2f;
-    [SerializeField] LevelData levelData;
+    [SerializeField] LevelDataRef levelDataRef;
 
     Vector3 BrickScale { get { return brickPrefab.transform.localScale; } }
 
     void Awake()
     {
-        float startX = (-levelData.Cols * BrickScale.x - (levelData.Rows - 1) * brickGap + BrickScale.x) / 2f;
+        LevelData levelData = levelDataRef.value;
+        startX = (-levelData.Cols * BrickScale.x - (levelData.Rows - 1) * brickGap + BrickScale.x) / 2f;
         for (int i = 0; i < levelData.Rows; i++)
         {
             for (int j = 0; j < levelData.Cols; j++)

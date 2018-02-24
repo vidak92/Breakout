@@ -1,4 +1,10 @@
 ﻿
+public static class SceneNames
+{
+    public static string Main = "MainMenu";
+    public static string Game = "Game";
+}
+
 public static class Tags 
 {
     public static string Paddle         = "Paddle";

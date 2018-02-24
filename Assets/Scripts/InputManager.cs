@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InputManager : MonoBehaviour
 {
@@ -6,7 +7,7 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Q))
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            SceneManager.LoadScene(SceneNames.Main);
         }
     }
 }

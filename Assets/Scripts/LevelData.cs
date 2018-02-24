@@ -15,7 +15,7 @@ public class LevelData : ScriptableObject
     public const int MaxCols = 8;
 
     [SerializeField, HideInInspector] BrickType[] gridData;
-
+    [SerializeField] string levelName;
 
     public bool DataInitialized { get { return gridData != null; } }
 
@@ -23,6 +23,7 @@ public class LevelData : ScriptableObject
 
     public int Cols { get { return gridData.Length / MaxRows; } }
 
+    public string LevelName { get { return levelName; } }
 
     public void ResetData()
     {

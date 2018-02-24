@@ -5,7 +5,8 @@ using UnityEditor;
 public enum BrickType
 {
     Empty,
-    Regular
+    Regular,
+    Unbreakable
 }
 
 [CreateAssetMenu(fileName = "NewLevelData", menuName = "Data/LevelData")]

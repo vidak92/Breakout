@@ -6,6 +6,7 @@ public class LevelDataEditor : Editor
 {
     GUIStyle styleEmpty;
     GUIStyle styleRegular;
+    GUIStyle styleUnbreakable;
     bool stylesInitialized;
 
     void OnEnable()
@@ -24,6 +25,11 @@ public class LevelDataEditor : Editor
 
             styleRegular = new GUIStyle(GUI.skin.button);
             styleRegular.normal.textColor = Color.blue;
+            styleRegular.fontStyle = FontStyle.Bold;
+
+            styleUnbreakable = new GUIStyle(GUI.skin.button);
+            styleUnbreakable.normal.textColor = Color.red;
+            styleUnbreakable.fontStyle = FontStyle.Bold;
 
             stylesInitialized = true;
         }
@@ -77,6 +83,8 @@ public class LevelDataEditor : Editor
                 return "E";
             case BrickType.Regular:
                 return "R";
+            case BrickType.Unbreakable:
+                return "U";
             default:
                 return "";
         }
@@ -90,6 +98,8 @@ public class LevelDataEditor : Editor
                 return styleEmpty;
             case BrickType.Regular:
                 return styleRegular;
+            case BrickType.Unbreakable:
+                return styleUnbreakable;
             default:
                 return null;
         }
@@ -102,6 +112,8 @@ public class LevelDataEditor : Editor
             case BrickType.Empty:
                 return BrickType.Regular;
             case BrickType.Regular:
+                return BrickType.Unbreakable;
+            case BrickType.Unbreakable:
                 return BrickType.Empty;
             default:
                 return BrickType.Empty;

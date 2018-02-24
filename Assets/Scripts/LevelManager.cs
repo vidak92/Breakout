@@ -26,7 +26,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] GameObject ballPrefab;
 
     float startX = -11.2f, startY = 8f;
-    GameObject[,] grid;
+    Brick[,] bricks;
     int activeBrickCount;
 
     Vector3 BrickScale { get { return brickPrefab.transform.localScale; } }
@@ -45,20 +45,20 @@ public class LevelManager : MonoBehaviour
 
     void Awake()
     {
-        grid = new GameObject[LevelData.MaxRows, LevelData.MaxCols];
+        bricks = new Brick[LevelData.MaxRows, LevelData.MaxCols];
         startX = (-LevelData.MaxCols * BrickScale.x - (LevelData.MaxRows - 1) * brickGap + BrickScale.x) / 2f;
         for (int i = 0; i < LevelData.MaxRows; i++)
         {
             for (int j = 0; j < LevelData.MaxCols; j++)
             {
-                GameObject brick = Instantiate(brickPrefab) as GameObject;
+                GameObject brickObject = Instantiate(brickPrefab) as GameObject;
                 float x = startX + j * (BrickScale.x + brickGap);
                 float y = startY - i * (BrickScale.y + brickGap);
-                brick.transform.parent = brickGridRoot.transform;
-                brick.transform.localPosition = new Vector3(x, y, 0f);
-                brick.name = "Brick" + i + j;
-                brick.SetActive(false);
-                grid[i, j] = brick;
+                brickObject.transform.parent = brickGridRoot.transform;
+                brickObject.transform.localPosition = new Vector3(x, y, 0f);
+                brickObject.name = "Brick" + i + j;
+                brickObject.SetActive(false);
+                bricks[i, j] = brickObject.GetComponent<Brick>();
             }
         }
     }
@@ -76,10 +76,18 @@ public class LevelManager : MonoBehaviour
             for (int j = 0; j < levelData.Cols; j++)
             {
                 BrickType? brickType = levelData.GetData(i, j);
-                if (brickType.HasValue && brickType.Value == BrickType.Regular)
+                if (brickType.HasValue)
                 {
-                    grid[i, j].SetActive(true);
-                    activeBrickCount++;
+                    if (brickType.Value == BrickType.Regular)
+                    {
+                        bricks[i, j].gameObject.SetActive(true);
+                        activeBrickCount++;
+                    }
+                    else if (brickType.Value == BrickType.Unbreakable)
+                    {
+                        bricks[i, j].gameObject.SetActive(true);
+                    }
+                    bricks[i, j].Type = brickType.Value;
                 }
 //                else
 //                {

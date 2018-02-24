@@ -4,12 +4,13 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] IntVar currentLevelIndex;
+    [SerializeField] IntVar startingLevelIndex;
     [SerializeField] IntVar currentLivesCount;
     [SerializeField] IntVar startingLivesCount;
 
     public void StartGame()
     {
-        currentLevelIndex.value = 0;
+        currentLevelIndex.value = startingLevelIndex.value;
         currentLivesCount.value = startingLivesCount.value;
         SceneManager.LoadScene(SceneNames.Game);
     }

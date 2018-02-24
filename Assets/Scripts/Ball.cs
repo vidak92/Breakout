@@ -91,8 +91,12 @@ public class Ball : MonoBehaviour
 //                Debug.Log("bounce y");
             }
 
-            Destroy(other.gameObject);
-            BrickDestroyed();
+            Brick brick = other.GetComponent<Brick>();
+            if (brick.Type == BrickType.Regular)
+            {
+                Destroy(other.gameObject);
+                BrickDestroyed();
+            }
         }
     }
 

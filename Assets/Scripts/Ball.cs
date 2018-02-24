@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
+using System;
 
 // TODO reimplement collisions without physics engine
 public class Ball : MonoBehaviour
 {
+    public static event Action BrickDestroyed = () => { };
+    public static event Action BallLost = () => { };
+
     [SerializeField] float movementSpeed;
 
     Transform paddleTransform;
@@ -10,18 +14,16 @@ public class Ball : MonoBehaviour
     Collider2D col;
     Vector3 paddleOffset;
     bool canMove;
+    float minY;
 
     void Awake()
     {
+        minY = -Camera.main.orthographicSize - transform.localScale.y;
         Init();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
-        }
         if (Input.GetKeyDown(KeyCode.B))
         {
             Init();
@@ -48,6 +50,12 @@ public class Ball : MonoBehaviour
         else
         {
             transform.position = paddleTransform.position + paddleOffset;
+        }
+
+        if (transform.position.y <= minY)
+        {
+            BallLost();
+            Destroy(gameObject);
         }
     }
 
@@ -84,6 +92,7 @@ public class Ball : MonoBehaviour
             }
 
             Destroy(other.gameObject);
+            BrickDestroyed();
         }
     }
 

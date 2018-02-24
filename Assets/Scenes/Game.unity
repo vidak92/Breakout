@@ -408,46 +408,6 @@ Canvas:
 Transform:
   m_PrefabParentObject: {fileID: 451388, guid: f2d1973a3f78e41fd93cbfbff1ef15dd, type: 2}
   m_PrefabInternal: {fileID: 214889479}
---- !u!1 &663014468
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 663014470}
-  - component: {fileID: 663014469}
-  m_Layer: 0
-  m_Name: Managers
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &663014469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 663014468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a275c94f4a524a1a9c95ee355647f0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &663014470
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 663014468}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &736190823
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,7 +495,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &785131626
 Prefab:
@@ -753,7 +713,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1590280954
 GameObject:
@@ -795,8 +755,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0ce288dcb4294a18841c6d5959f74fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brickPrefab: {fileID: 159728, guid: 477e7d6770bcc4cbebb1ae86d02ba036, type: 2}
-  brickGap: 0.4
 --- !u!1 &1837778335
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,7 +786,7 @@ Transform:
   - {fileID: 400977376}
   - {fileID: 1590280955}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1837778337
 MonoBehaviour:
@@ -841,9 +799,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1f2aefca4e2740c8a4efd299c2e6e91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelDataRef: {fileID: 11400000, guid: 4875c2f20bcaa48ecb6420136ec57b69, type: 2}
-  brickGrid: {fileID: 1590280956}
+  remainingLives: {fileID: 11400000, guid: 90c1e2b712c14431db1f4d1da28cd0b0, type: 2}
+  livesTextPrefix: 'x '
+  currentLevelIndex: {fileID: 11400000, guid: abe914b1b29e74888abf98ab28335e6e, type: 2}
+  levels:
+  - {fileID: 11400000, guid: d7997005f16634627909d3ab32e69a68, type: 2}
+  - {fileID: 11400000, guid: 9a4eda787e6744ea78aa3e1c9f52ff4b, type: 2}
+  - {fileID: 11400000, guid: 66f1401ebc4cd4303baaff9fa9276d24, type: 2}
+  - {fileID: 11400000, guid: a1dfe9c3209fb4d18b585cad75118a5b, type: 2}
   titleText: {fileID: 2011792518}
+  livesText: {fileID: 167111936}
+  brickGridRoot: {fileID: 1590280954}
+  brickPrefab: {fileID: 159728, guid: 477e7d6770bcc4cbebb1ae86d02ba036, type: 2}
+  brickGap: 0.4
+  ballPrefab: {fileID: 111838, guid: f2d1973a3f78e41fd93cbfbff1ef15dd, type: 2}
 --- !u!1 &1977544258
 GameObject:
   m_ObjectHideFlags: 0
@@ -871,7 +840,7 @@ Transform:
   m_Children:
   - {fileID: 350984476}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2011792516
 GameObject:
